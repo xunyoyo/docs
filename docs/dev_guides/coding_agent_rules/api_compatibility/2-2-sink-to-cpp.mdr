@@ -31,6 +31,9 @@ alwaysApply: false
 
 **典型示例：** `paddle.log2`
 
+**执行链路提示**：参数解析发生在 Pybind 层（`paddle/fluid/pybind/eager_op_function.cc`），
+动态图前向封装在 `dygraph_functions.cc`，最终走 `api.cc` 调度到 Kernel（如 `AbsKernel`）。
+
 请严格按以下步骤依次执行，不要自行修改或跳过步骤：
 
 ### Step 1：配置 `python_api_info.yaml`

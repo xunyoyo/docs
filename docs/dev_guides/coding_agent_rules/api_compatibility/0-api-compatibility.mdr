@@ -82,6 +82,9 @@ Paddle API从上到下由5层组成（本项目直接修改第1、5层，对于�
 | 4 | C++ API层 | C++ | 根据`*.yaml`自动生成（`paddle/phi/api/lib/api.cc`） | Kernel选择调度 | ❌ 通常不改 |
 | 5 | Kernel层 | C++ | `paddle/phi/kernels/` | 实际计算逻辑实现 | ✅ **修改** |
 
+**典型调用链**：
+Python 层 → `paddle/fluid/pybind/eager_op_function.cc` → `paddle/fluid/eager/api/generated/eager_generated/forwards/dygraph_functions.cc` → `paddle/phi/api/lib/api.cc` → `paddle/phi/kernels/**`（如 `AbsKernel`）。
+
 **示例API层级**：
 ```python
 # Layer 1: Python层

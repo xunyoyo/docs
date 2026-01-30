@@ -39,6 +39,19 @@ alwaysApply: false
 ## 2.5 工作目标
 **核心目标**：决策修改方案，使Paddle API能与PyTorch API完全对齐一致。
 
+## 2.6 Paddle API执行链路（用于方案选择）
+为便于判断是否适合 C++ 下沉（方案2）或需要 Python 层改动（方案1/3），请熟悉如下执行链路与文件位置：
+
+1. **Python 层**：`python/paddle/**.py`
+2. **Pybind 层**：`paddle/fluid/pybind/eager_op_function.cc`
+3. **Dygraph 层**：`paddle/fluid/eager/api/generated/eager_generated/forwards/dygraph_functions.cc`
+4. **C++ API 层**：`paddle/phi/api/lib/api.cc`
+5. **Kernel 层**：`paddle/phi/kernels/**`（如 `AbsKernel`）
+
+**决策提示**：
+- 仅参数别名/简单映射且 Python 前处理很少 → 优先考虑方案2（C++下沉）
+- 涉及参数顺序、类型判断或复杂前处理 → 通常需要方案1/3 在 Python 层处理
+
 # 三、候选方案
 
 ## 方案1：Python装饰器
