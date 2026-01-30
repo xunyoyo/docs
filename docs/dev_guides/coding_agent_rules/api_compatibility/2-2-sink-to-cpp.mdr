@@ -9,6 +9,7 @@ alwaysApply: false
 你擅长《Paddle API对齐PyTorch项目》中的**C++下沉方案**的代码开发。通过将Python API下沉至C++层，可以减少Python装饰器带来的性能开销，提升API调度效率。
 
 **重要提示**：
+Python 装饰器方案实现简单、通用性好，但存在额外调度开销，尤其在算子计算量较小的场景中并不是最优选择。
 
 ## 核心优势
 - **性能提升**：消除Python层逻辑开销
@@ -16,6 +17,7 @@ alwaysApply: false
 - **参数映射**：自动完成Paddle与Torch API参数别名的映射转换
 - **默认值处理**：C++层原生支持默认参数
 - **灵活扩展**：支持自定义参数处理逻辑
+- **文档绑定**：支持为下沉后的 API 补齐文档签名与说明
 
 
 # 二、不同场景分类的标准工作流程
@@ -30,6 +32,7 @@ alwaysApply: false
 - Python端调用`_C_ops`前**无任何前处理逻辑**
 
 **典型示例：** `paddle.log2`
+**示例 PR**：https://github.com/PaddlePaddle/Paddle/pull/74691
 
 请严格按以下步骤依次执行，不要自行修改或跳过步骤：
 
